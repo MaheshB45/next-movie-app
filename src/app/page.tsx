@@ -24,12 +24,11 @@ const getMovies = async () => {
     const moviesList = await fetch(
       `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`
     );
-    //console.log(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`);
 
     if (!moviesList.ok) {
       throw new Error(`Error: ${moviesList.status}`);
     }
-    
+
     const moviesListJSON = await moviesList.json();
     return moviesListJSON;
   } catch (error) {
@@ -39,7 +38,8 @@ const getMovies = async () => {
 };
 
 export default async function Home() {
-  const movieList = await getMovies();
+  const movieList = await getMovies(); // Fetch the movies here
+  
   return (
     <main className="p-[1rem]">
       <h1 className="my-6 text-center font-semibold text-2xl">
@@ -48,7 +48,7 @@ export default async function Home() {
 
       <section>
         <div className="flex flex-wrap justify-center gap-3">
-          {movieList.results.length > 0 &&
+          {movieList?.results.length > 0 &&
             movieList.results.map((movie: MovieDetails) => {
               return (
                 <MovieCard
